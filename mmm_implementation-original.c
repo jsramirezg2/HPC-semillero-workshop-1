@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 50 // test value: 50
-#define MIN_SIZE 2 // test value: 2
-#define MAX_SIZE 5000 // test value: 5000
+#define N 10 // test value: 50
+#define MIN_SIZE 1000 // test value: 2
+#define MAX_SIZE 1000 // test value: 5000
 #define MAX_NUM 10000000.0
 
 int main(){

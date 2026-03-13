@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <omp.h>
 
-#define N 50 // test value: 50
-#define MIN_SIZE 2 // test value: 2
-#define MAX_SIZE 5000 // test value: 5000
+#define N 10 // test value: 50
+#define MIN_SIZE 1000 // test value: 2
+#define MAX_SIZE 1000 // test value: 5000
 #define MAX_NUM 10000000.0
 
 int main(){
@@ -20,8 +21,7 @@ int main(){
         
         // Start modifying here
 
-
-
+        #pragma omp parallel for
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
                 A[i][j] = 1 + ((double)rand() / RAND_MAX) * MAX_NUM; 
@@ -30,6 +30,7 @@ int main(){
             }
         }
 
+        #pragma omp parallel for
         for(int i = 0; i < size; i++){
             for(int k = 0; k < size; k++){
                 for(int j = 0; j < size; j++){
