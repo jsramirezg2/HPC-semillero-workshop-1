@@ -21,15 +21,26 @@ int main(){
         
         // Start modifying here
 
-        #pragma omp parallel for
-        for(int i = 0; i < size; i++){
-            for(int j = 0; j < size; j++){
-                A[i][j] = 1 + ((double)rand() / RAND_MAX) * MAX_NUM; 
-                B[i][j] = 1 + ((double)rand() / RAND_MAX) * MAX_NUM; 
-                C[i][j] = 0;
+        unsigned int seed = (unsigned int) time(NULL); // seed the random number generator globally 
+
+        #pragma omp parallel
+        {
+
+            // rand is not thread safe, we need to seed it separately for each thread
+
+            // first we get a local seed for each thread
+
+            unsigned int local_seed = seed + (unsigned int) omp_get_thread_num();
+
+            #pragma omp for
+            for(int i = 0; i < size; i++){
+                for(int j = 0; j < size; j++){
+                    A[i][j] = 1 + ((double)rand_r(&local_seed) / RAND_MAX) * MAX_NUM; 
+                    B[i][j] = 1 + ((double)rand_r(&local_seed) / RAND_MAX) * MAX_NUM; 
+                    C[i][j] = 0;
+                }
             }
         }
-
         #pragma omp parallel for
         for(int i = 0; i < size; i++){
             for(int k = 0; k < size; k++){
