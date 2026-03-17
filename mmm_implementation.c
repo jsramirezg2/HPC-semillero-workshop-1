@@ -44,8 +44,12 @@ int main(){
         #pragma omp parallel for
         for(int i = 0; i < size; i++){
             for(int k = 0; k < size; k++){
+
+                double a_ik = A[i][k]; // store A[i][k] in a local variable to reduce memory access
+
+                #pragma omp simd // use SIMD instructions to vectorize the inner loop
                 for(int j = 0; j < size; j++){
-                    C[i][j] += A[i][k] * B[k][j];
+                    C[i][j] += a_ik * B[k][j];
                 }
             }
         }
