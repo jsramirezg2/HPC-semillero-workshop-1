@@ -17,8 +17,9 @@ int main(){
     while(iterator++ < N){
         printf("Running iteration number: %d\n", iterator);
 
-        clock_t begin_time = clock();
-        
+        // get the start time using omp_get_wtime for better accuracy in parallel regions
+        double begin_time = omp_get_wtime();
+
         // Start modifying here
 
         unsigned int seed = (unsigned int) time(NULL); // seed the random number generator globally 
@@ -56,8 +57,9 @@ int main(){
 
         // Stop modifying here
         
-        clock_t end_time = clock();
-        time_spent += (double)(end_time - begin_time) / CLOCKS_PER_SEC;
+        // get the end time using omp_get_wtime
+        double end_time = omp_get_wtime();
+        time_spent += end_time - begin_time;
     }
 
     printf("Size of matrices: %d \n", size);
